@@ -1,0 +1,26 @@
+main
+{
+    overflow-x: auto;
+    text-align: center;
+    color:white;
+    background-color:#013220;
+}
+
+body
+{
+    background-color:#013220;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+}
+
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
