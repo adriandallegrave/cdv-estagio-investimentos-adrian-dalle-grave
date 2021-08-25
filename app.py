@@ -2,9 +2,13 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from helpers import login_required
+import sqlite3
+from cs50 import SQL
 
 # Configure application
 app = Flask(__name__)
+
+db = SQL("sqlite:///clients.db")
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -34,4 +38,9 @@ def index():
 def login():
 
     return render_template("layout.html")
+
+@app.route("/register")
+def login():
+
+    return render_template("layout.html")    
 
