@@ -1,6 +1,15 @@
 # Solução apresentada por Adrian Dalle Grave #
 
-Esse é o primeiro commit do projeto.
+## Execução do app
+
+* Clone o projeto e vá para a pasta dele no linux
+* `python3 -m venv venv`
+* `. venv/bin/activate`
+* `pip install Flask`
+* `pip install Flask-Session`
+* `export FLASK_APP=app.py`
+* `flask run`
+* Acesse o site em http://127.0.0.1:5000/
 
 ## Planejamento
 
