@@ -1,3 +1,17 @@
+# Solução apresentada por Adrian Dalle Grave #
+
+Esse é o primeiro commit do projeto.
+
+## Planejamento
+
+* Fazer o app em Flask
+* Utilizar todos os métodos propostos
+* Versionar corretamente
+
+
+updating...
+
+
 # Desafio estágio dev CDV #
 
 Bem-vindo ao teste técnico do processo seletivo do Clube do Valor.
