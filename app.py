@@ -1,9 +1,12 @@
 import sqlite3
 import re
 import datetime
+import json
+import jsonify
 
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
+from flask_restful import Resource, Api
 from tempfile import mkdtemp
 from helpers import login_required, apology
 from cs50 import SQL
@@ -13,7 +16,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 # Configure application and database
 app = Flask(__name__)
-
+api = Api(app)
 db = SQL("sqlite:///clients.db")
 
 # Ensure templates are auto-reloaded
@@ -88,10 +91,11 @@ def login():
 # Link to create an account
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     if request.method == "GET":
         return render_template("register.html")
-    else:
 
+    else:
         username = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
@@ -225,3 +229,52 @@ def index():
 
     things = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
     return render_template("onboarding.html", things=things, status=status)
+
+
+@app.route("/api", methods=["GET", "POST", "PUT"])
+def api():
+
+    x = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    x = json.dumps(x)
+
+    if request.method == "GET":
+        return x
+
+    elif request.method == "POST":
+        # Still have to make it so that if post from api sends a client that already exists, it deletes him
+        data = request.json
+        username = "API"
+        status = "Aguardando assinatura de documentos"
+        date = datetime.datetime.now()
+        cpf = data["cpf"]
+        name = data["name"]
+
+        if name == "":
+            return "Preencha o nome do cliente"
+
+        if cpf == "":
+            return "Preencha o CPF do cliente"
+
+        if not re.search("^[0-9]*", cpf):
+            return "Preencha o CPF apenas com números"
+        elif len(cpf) != 11:
+            return "Digite apenas os 11 dígitos do CPF"
+
+        rows = db.execute("SELECT * FROM onboarding WHERE (cpf = ?)", cpf)
+        if len(rows) != 0:
+            return "Cliente já existe"
+
+        db.execute("INSERT INTO onboarding (name, cpf, status, username, date) VALUES(?, ?, ?, ?, ?)", name, cpf, status, username, date)
+
+        return "sucesso"
+
+    elif request.method == "PUT":
+        possiveis = ["Aguardando assinatura de documentos", "Aguardando transferência de recursos", "Gestão de patrimônio ativa"]
+        data = request.json
+        status = data["status"]
+        status = possiveis[status]
+        cpf = data["cpf"]
+
+        db.execute("UPDATE onboarding SET status = ? WHERE (cpf = ?)", status, cpf)
+
+        return "sucesso"
