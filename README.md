@@ -11,14 +11,63 @@
 * `flask run`
 * Acesse o site em http://127.0.0.1:5000/
 
+## Como usar o API
+
+* Siga os passos acima para ativar o servidor http://127.0.0.1:5000/
+* Em outro terminal abra o python com `python3`
+* `>>> import requests`
+
+### method GET
+
+* `>>> r = requests.get('http://127.0.0.1:5000/api')`
+* `>>> r.json()`
+
+    Isso mostrará o json com os dados da tabela
+
+### method POST
+
+* `r = requests.post('http://127.0.0.1:5000/api', json={'name':'nome_do_cliente', 'cpf':'apenas_digitos'})`
+
+    Isso incluirá um novo cliente no banco de dados e seu status ficará como "Aguardando assinatura de documentos".
+
+- nome_do_cliente → O nome do novo cliente
+- apenas_digitos → Número do CPF sem espaços, traços ou pontos
+
+### method PUT
+
+* `r = requests.put('http://127.0.0.1:5000/api', json={'cpf':'apenas_digitos', 'status':0})`
+
+    Isso atualizará a situação do cliente. 
+
+- apenas_digitos → Número do CPF sem espaços, traços ou pontos
+- status → 0, 1 ou 2 sendo:
+
+        0 → Aguardando assinatura de documentos
+        1 → Aguardando transferência de recursos
+        2 → Gestão de patrimônio ativa
+
 ## Planejamento
 
-* Fazer o app em Flask
+* Fazer o app utilizando o framework Flask
 * Utilizar todos os métodos propostos
 * Versionar corretamente
 
+## O que falta
+
+* Editar nome e cpf de cliente já cadastrado
+* Caso relevante, explicar melhorias que poderiam ser feitas
+* Filtrar tabela
+* Search
+* Testes
+* Docker
+* Documentação
+* pycodestyle (pep8)
+* Todo css e animações
+* Adaptar para mobile
 
 updating...
+
+
 
 
 # Desafio estágio dev CDV #
