@@ -1,8 +1,11 @@
+import sqlite3
+import re
+import datetime
+
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from helpers import login_required, apology
-import sqlite3, re
 from cs50 import SQL
 from werkzeug.exceptions import default_exceptions, HTTPException
 from werkzeug.exceptions import InternalServerError
@@ -128,7 +131,7 @@ def change():
         confirmation = request.form.get("confirmation")
         password_hash = generate_password_hash(confirmation)
 
-# Error checking
+        # Error checking
         if username == "":
             return apology("Campo usuário vazio")
 
@@ -142,19 +145,15 @@ def change():
         if password != confirmation:
             return apology("As senhas são diferentes")
 
-# Check if current password is correct
-
+        # Check if current password is correct
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
         if len(rows) != 1 or not check_password_hash(rows[0]["password"], request.form.get("currentpassword")):
             return apology("Usuário ou senha inválidos", 403)
 
-# Update database with new password
-
+        # Update database with new password
         db.execute("UPDATE users SET password = ? WHERE username = ?", password_hash, username)
 
-# Send user back to homepage
         return redirect("/")
-
 
 
 # Simple log out link
@@ -181,15 +180,15 @@ def add():
             return apology("Preencha o nome do cliente")
 
         if not request.form.get("cpf"):
-            return apology("Preencha o cpf do cliente")
+            return apology("Preencha o CPF do cliente")
 
         cpf = request.form.get("cpf")
         name = request.form.get("name")
 
         if not re.search("^[0-9]*", cpf):
-            return apology("Preencha o cpf apenas com números")
+            return apology("Preencha o CPF apenas com números")
         elif len(cpf) != 11:
-            return apology("Cpf deve ter apenas 11 digitos")
+            return apology("Digite apenas os 11 dígitos do CPF")
 
         rows = db.execute("SELECT * FROM onboarding WHERE (cpf = ?)", cpf)
         if len(rows) != 0:
@@ -198,23 +197,31 @@ def add():
         db.execute("INSERT INTO onboarding (name, cpf, status, username, date) VALUES(?, ?, ?, ?, ?)", name, cpf, status, username, date)
 
         return redirect("/")
-        
+
     else:
 
         return render_template("add.html")
 
 
-
-
-
-# Main page. Accepts GET, POST and PUT
-@app.route("/")
+# Main page with clients table. Accepts GET and POST
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
 
-    return render_template("onboarding.html")
+    status = {"Aguardando assinatura de documentos", "Aguardando transferência de recursos", "Gestão de patrimônio ativa"}
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]['username']
 
+    if request.method == "POST":
+        excluir = request.form.get("del")
+        # Updating client status from database
+        if excluir == "nao":
+            atualizacao_cliente = request.form.get("status")
+            cpf = request.form.get("cpf")
+            db.execute("UPDATE onboarding SET status = ? WHERE (cpf = ?)", atualizacao_cliente, cpf)
+        # Deleting client from database
+        else:
+            cpf = request.form.get("cpf")
+            db.execute("DELETE FROM onboarding WHERE (cpf = ?)", cpf)
 
-
-
-
+    things = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    return render_template("onboarding.html", things=things, status=status)

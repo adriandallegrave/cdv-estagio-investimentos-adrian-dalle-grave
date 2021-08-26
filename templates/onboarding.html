@@ -7,6 +7,82 @@ Home
 
 {% block main %}
 
-
+<div class="bootstrap-table bootstrap4" style="width: 90%;">
+    <div class="columns columns-right btn-group float-right">
+        <div class="float-right search btn-group">
+            <input class="form-control search-input" type="search" placeholder="Search" autocomplete="off">
+        </div>  
+    </div> <!-- search -->
+    <div class="fixed-table-container fixed-height has-footer" style="padding-bottom: 149px;">
+        <div class="fixed-table-header" style="margin-right: 0px;">
+            <table id="table" data-search="true" 
+            class="table table-bordered table-hover" style="margin-top: -98px;">
+                <thead class="">
+                    <tr>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">Nome</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">CPF</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">Situação</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">Responsável</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">Última Alteração</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">Nova Situação</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id">
+                            <div class="th-inner sortable both">Deletar Cliente</div>
+                            <div class="fht-cell"></div>
+                        </th>                                                    
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for thing in things %}
+                    <tr>
+                        <td>  {{ thing["name"] }}  </td>
+                        <td>  {{ thing["cpf"] }}  </td>
+                        <td>  {{ thing["status"] }}  </td>
+                        <td>  {{ thing["username"] }}  </td>
+                        <td>  {{ thing["date"] }}  </td>
+                        <td>
+                            <form action="/" method="post">
+                                <select name="status" style="width: 50%">
+                                    <option disabled selected value="">Opções</option>
+                                    {% for s in status %}
+                                        <option value="{{ s }}">{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input autocomplete="off" name="cpf" value="{{ thing['cpf'] }}" type="hidden">
+                                <input autocomplete="off" name="del" value="nao" type="hidden">                                                                
+                                <button class="btn btn-secondary" type="submit">Alterar</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/" method="post">
+                                <input autocomplete="off" name="cpf" value="{{ thing['cpf'] }}" type="hidden">
+                                <input autocomplete="off" name="del" value="sim" type="hidden">
+                                <button class="btn btn-secondary" type="submit">Deletar</button>
+                            </form>
+                        </td>                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> <!-- table headers -->
+    </div> <!-- whole table -->
+</div> <!-- end of content -->
 
 {% endblock %}
