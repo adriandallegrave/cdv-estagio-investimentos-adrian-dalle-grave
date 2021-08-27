@@ -63,14 +63,13 @@
 
 ## O que falta
 
-* Todo css e animações
-* Adaptar para mobile
 * Testes
-* Documentação
 * pycodestyle (pep8)
+* Documentação
 * Docker
+* Documentação - ajuste para Docker
 * Caso relevante, explicar melhorias que poderiam ser feitas
-* Limpar tabela e entregar
+* Limpar banco de dados e entregar
 
 
 updating...
