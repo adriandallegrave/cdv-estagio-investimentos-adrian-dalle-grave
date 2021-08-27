@@ -57,13 +57,13 @@
 * Editar nome e cpf de cliente já cadastrado
 * Caso relevante, explicar melhorias que poderiam ser feitas
 * Filtrar tabela
-* Search
 * Testes
 * Docker
 * Documentação
 * pycodestyle (pep8)
 * Todo css e animações
 * Adaptar para mobile
+* Limpar planilha e entregar
 
 updating...
 
