@@ -54,6 +54,12 @@
 
 - apenas_digitos → Número do CPF sem espaços, traços ou pontos    
 
+## Teste automático de API
+
+* Siga os passos acima para ativar o servidor http://127.0.0.1:5000/
+* Em outro terminal, vá até a pasta do projeto
+* `python3 api_test.py`
+
 
 ## Planejamento
 
@@ -63,7 +69,6 @@
 
 ## O que falta
 
-* Testes
 * pycodestyle (pep8)
 * Documentação
 * Docker
