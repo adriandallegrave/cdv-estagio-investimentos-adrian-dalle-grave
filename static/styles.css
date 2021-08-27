@@ -2,9 +2,8 @@ html {
     /* color pallete */
     --blue: #328AF6;
     --purple: #5000C8;
-
     width: 100vw;
-  }
+}
 
 main
 {
@@ -14,11 +13,9 @@ main
     background-color: white;    
 }
 
-
 body {
     background-color: white;
 }
-
 
 th {
     cursor: pointer;
@@ -27,7 +24,7 @@ th {
     margin: 20px;    
     line-height: 20px;    
     text-align: center;        
-  }
+}
 
 td {
     border: 1px solid black;
@@ -47,8 +44,7 @@ table {
   text-align: center;
 }
 
-main .form-control
-{
+main .form-control {
     display: inline-block;
     width: auto;
 }
@@ -103,7 +99,7 @@ main .form-control
         width: 100vw;
         text-align: center;
     }
-  }
+}
 
 #navitem {
     font-family: poppins,Poppins;
@@ -124,12 +120,12 @@ main .form-control
 }
 
 
-  @keyframes navbar {
+@keyframes navbar {
     0% {
         background-color: black;
-        }
+    }
 
     100% {
         background-color: #5000C8;
     }
-  }
+}

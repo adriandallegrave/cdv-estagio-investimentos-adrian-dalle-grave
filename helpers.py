@@ -15,6 +15,7 @@ def login_required(f):
     return decorated_function
 
 
+# Renders error messages when needed
 def apology(message, code=400):
 
-    return render_template("apology.html", code=code, message=message)    
+    return render_template("apology.html", code=code, message=message)

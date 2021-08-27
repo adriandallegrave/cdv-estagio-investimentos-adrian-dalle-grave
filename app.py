@@ -39,7 +39,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-# Error handler as was found in pset9
+# Error handler
 def errorhandler(e):
     """Handle error"""
     if not isinstance(e, HTTPException):
@@ -56,34 +56,29 @@ for code in default_exceptions:
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    # Forget any user_id
     session.clear()
 
-    # User reached route via POST
     if request.method == "POST":
 
-        # Ensure username was submitted
+        # Error checking
         if not request.form.get("username"):
             return apology("Deve preencher o campo usuario")
 
-        # Ensure password was submitted
         elif not request.form.get("password"):
             return apology("Deve preencher o campo senha")
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        k = "SELECT * FROM users WHERE username = ?"
+        rows = db.execute(k, request.form.get("username"))
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["password"], request.form.get("password")):
+        j = request.form.get("password")
+        k = check_password_hash(rows[0]["password"], j)
+        if len(rows) != 1 or not k:
             return apology("usuário ou senha inválidos")
 
-        # Remember which user has logged in
+        # Log in successful
         session["user_id"] = rows[0]["id"]
-
-        # Redirect user to home page
         return redirect("/")
 
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
 
@@ -101,10 +96,12 @@ def register():
         confirmation = request.form.get("confirmation")
         password_hash = generate_password_hash(password)
 
+        # Error checking
         if username == "":
             return apology("Campo usuário vazio")
 
-        unique = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        k = "SELECT * FROM users WHERE username = ?"
+        unique = db.execute(k, request.form.get("username"))
         if len(unique) != 0:
             return apology("Nome de usuário já foi usado")
 
@@ -114,7 +111,9 @@ def register():
         if password != confirmation:
             return apology("As senhas são diferentes")
 
-        db.execute("INSERT INTO users (username, password) VALUES(?, ?)", username, password_hash)
+        # Account creation successful
+        k = "INSERT INTO users (username, password) VALUES(?, ?)"
+        db.execute(k, username, password_hash)
 
         return redirect("/login")
 
@@ -124,11 +123,9 @@ def register():
 @login_required
 def change():
 
-    # Render html to change password
     if request.method == "GET":
         return render_template("change.html")
     else:
-        # Get information needed
         username = request.form.get("username")
         currentpassword = request.form.get("currentpassword")
         password = request.form.get("password")
@@ -139,7 +136,8 @@ def change():
         if username == "":
             return apology("Campo usuário vazio")
 
-        unique = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        k = "SELECT * FROM users WHERE username = ?"
+        unique = db.execute(k, request.form.get("username"))
         if len(unique) != 1:
             return apology("Usuário não encontrado")
 
@@ -151,11 +149,14 @@ def change():
 
         # Check if current password is correct
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
-        if len(rows) != 1 or not check_password_hash(rows[0]["password"], request.form.get("currentpassword")):
+        j = request.form.get("currentpassword")
+        k = check_password_hash(rows[0]["password"], j)
+        if len(rows) != 1 or not k:
             return apology("Usuário ou senha inválidos", 403)
 
         # Update database with new password
-        db.execute("UPDATE users SET password = ? WHERE username = ?", password_hash, username)
+        k = "UPDATE users SET password = ? WHERE username = ?"
+        db.execute(k, password_hash, username)
 
         return redirect("/")
 
@@ -168,18 +169,19 @@ def logout():
     return redirect("/")
 
 
-# Form to add a new client to onboarding
+# Form to add a new client to onboarding database
 @app.route("/add", methods=["GET", "POST"])
 @login_required
 def add():
 
-    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]['username']
+    k = "SELECT username FROM users WHERE id = ?"
+    username = db.execute(k, session["user_id"])[0]['username']
     status = "Aguardando assinatura de documentos"
     date = datetime.datetime.now()
     cpf = name = ""
 
     if request.method == "POST":
-
+        # Error checking
         if not request.form.get("name"):
             return apology("Preencha o nome do cliente")
 
@@ -198,48 +200,61 @@ def add():
         if len(rows) != 0:
             return apology("Cliente já existe")
 
-        db.execute("INSERT INTO onboarding (name, cpf, status, username, date) VALUES(?, ?, ?, ?, ?)", name, cpf, status, username, date)
+        # New client successfully added
+        k = "INSERT INTO onboarding (name, cpf, status, username, date)"
+        k = k + " VALUES(?, ?, ?, ?, ?)"
+        db.execute(k, name, cpf, status, username, date)
 
         return redirect("/")
 
     else:
-
         return render_template("add.html")
 
 
-# Main page with clients table. Accepts GET and POST
+# Main page with clients table
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
 
-    status = {"Aguardando assinatura de documentos", "Aguardando transferência de recursos", "Gestão de patrimônio ativa"}
-    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]['username']
+    status = {"Aguardando assinatura de documentos",
+              "Aguardando transferência de recursos",
+              "Gestão de patrimônio ativa"}
+    k = "SELECT username FROM users WHERE id = ?"
+    username = db.execute(k, session["user_id"])[0]['username']
 
     if request.method == "POST":
         excluir = request.form.get("del")
-        # Updating client status from database
+
         if excluir == "nao":
+            # Updating client status from database
             atualizacao_cliente = request.form.get("status")
             cpf = request.form.get("cpf")
-            db.execute("UPDATE onboarding SET status = ? WHERE (cpf = ?)", atualizacao_cliente, cpf)
-        # Deleting client from database
+            k = "UPDATE onboarding SET status = ? WHERE (cpf = ?)"
+            db.execute(k, atualizacao_cliente, cpf)
+
         else:
+            # Deleting client from database
             cpf = request.form.get("cpf")
             db.execute("DELETE FROM onboarding WHERE (cpf = ?)", cpf)
 
-    things = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    # If method is GET
+    k = "SELECT name, cpf, status, username, date FROM onboarding"
+    things = db.execute(k)
     return render_template("onboarding.html", things=things, status=status)
 
 
+# Page to change name or CPF
 @app.route("/adjust", methods=["GET", "POST"])
 @login_required
 def adjust():
 
-    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]['username']
+    k = "SELECT username FROM users WHERE id = ?"
+    username = db.execute(k, session["user_id"])[0]['username']
 
     if request.method == "POST":
         cpf = request.form.get("cpf")
-        current_name = db.execute("SELECT name FROM onboarding WHERE (cpf = ?)", cpf)
+        k = "SELECT name FROM onboarding WHERE (cpf = ?)"
+        current_name = db.execute(k, cpf)
         novo_cpf = request.form.get("novocpf")
         novo_nome = request.form.get("name")
 
@@ -249,6 +264,7 @@ def adjust():
         if request.form.get("name") == "":
             novo_nome = current_name
 
+        # Error checking
         if not request.form.get("cpf"):
             return apology("Preencha o CPF atual do cliente")
 
@@ -257,28 +273,34 @@ def adjust():
         elif len(cpf) != 11:
             return apology("Digite apenas os 11 dígitos do CPF")
 
-        db.execute("UPDATE onboarding SET name = ? WHERE (cpf = ?)", novo_nome, cpf)
-        db.execute("UPDATE onboarding SET cpf = ? WHERE (cpf = ?)", novo_cpf, cpf)
+        # Updating DB
+        db.execute("UPDATE onboarding SET name = ? WHERE (cpf = ?)",
+                   novo_nome, cpf)
+        db.execute("UPDATE onboarding SET cpf = ? WHERE (cpf = ?)",
+                   novo_cpf, cpf)
         return redirect("/")
     else:
         return render_template("adjust.html")
 
-
-    things = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    k = "SELECT name, cpf, status, username, date FROM onboarding"
+    things = db.execute(k)
     return render_template("onboarding.html", things=things, status=status)
 
 
+# API with all its methods
 @app.route("/api", methods=["GET", "POST", "PUT", "DELETE"])
 def api():
 
-    my_query = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    k = "SELECT name, cpf, status, username, date FROM onboarding"
+    my_query = db.execute(k)
     x = json.dumps(my_query)
 
+    # GET returns json
     if request.method == "GET":
         return x
 
+    # POST adds new client
     elif request.method == "POST":
-        # Still have to make it so that if post from api sends a client that already exists, it deletes him
         data = request.json
         username = "API"
         status = "Aguardando assinatura de documentos"
@@ -301,21 +323,29 @@ def api():
         if len(rows) != 0:
             return "Cliente já existe"
 
-        db.execute("INSERT INTO onboarding (name, cpf, status, username, date) VALUES(?, ?, ?, ?, ?)", name, cpf, status, username, date)
+        k = "INSERT INTO onboarding "
+        k = k + "(name, cpf, status, username, date) VALUES(?, ?, ?, ?, ?)"
+
+        db.execute(k, name, cpf, status, username, date)
 
         return "sucesso"
 
+    # PUT changes client status
     elif request.method == "PUT":
-        possiveis = ["Aguardando assinatura de documentos", "Aguardando transferência de recursos", "Gestão de patrimônio ativa"]
+        possiveis = ["Aguardando assinatura de documentos",
+                     "Aguardando transferência de recursos",
+                     "Gestão de patrimônio ativa"]
         data = request.json
         status = data["status"]
         status = possiveis[status]
         cpf = data["cpf"]
 
-        db.execute("UPDATE onboarding SET status = ? WHERE (cpf = ?)", status, cpf)
+        db.execute("UPDATE onboarding SET status = ? WHERE (cpf = ?)",
+                   status, cpf)
 
         return "sucesso"
 
+    # DELETE excludes a client
     elif request.method == "DELETE":
         data = request.json
         cpf = data["cpf"]
