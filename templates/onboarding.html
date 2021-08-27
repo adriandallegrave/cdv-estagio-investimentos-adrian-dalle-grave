@@ -7,43 +7,43 @@ Home
 
 {% block main %}
 
-<div class="bootstrap-table bootstrap4" data-search="true" data-show-refresh="true" style="width: 100%;">
+<div class="bootstrap-table bootstrap4" data-search="true" data-show-refresh="true" id="mainTableDiv">
     <div class="columns columns-right btn-group float-right">
-        <div class="float-right search btn-group">
+        <div class="float-right search btn-group" id="mainTableSearch">
             <input class="form-control search-input" type="search" id="myInput" placeholder="Pesquise por nomes" onkeyup="myFunction()" autocomplete="off">
         </div>  
-    </div> <!-- search -->
-    <div class="fixed-table-container fixed-height has-footer" style="padding-bottom: 149px;">
-        <div class="fixed-table-header" style="margin-right: 0px;">
-            <table id="table" data-search="true" class="table table-bordered table-hover" style="margin-top: -98px;">
+    </div>
+    <div class="fixed-table-container fixed-height has-footer" style="padding-bottom: 149px;" id="mainTableContainer">
+        <div class="fixed-table-header" style="margin-right: 0px;" id="mainTableContent">
+            <table id="table" data-search="true" class="table table-bordered table-hover" style="margin-top: -98px; font-family: poppins,Poppins;  ">
                 <thead class="">
                     <tr>
-                        <th onclick="sortTable(0)" style="text-align: center; vertical-align: middle; " data-field="id">
-                            <div class="th-inner sortable both">Nome</div>
+                        <th onclick="sortTable(0)" style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
+                            <div class="th-inner sortable both">NOME</div>
                             <div class="fht-cell"></div>
                         </th>
-                        <th onclick="sortTable(1)" style="text-align: center; vertical-align: middle; " data-field="id">
+                        <th onclick="sortTable(1)" style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
                             <div class="th-inner sortable both">CPF</div>
                             <div class="fht-cell"></div>
                         </th>
-                        <th onclick="sortTable(2)" style="text-align: center; vertical-align: middle; " data-field="id">
-                            <div class="th-inner sortable both">Situação</div>
+                        <th onclick="sortTable(2)" style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
+                            <div class="th-inner sortable both">SITUAÇÃO</div>
                             <div class="fht-cell"></div>
                         </th>
-                        <th onclick="sortTable(3)" style="text-align: center; vertical-align: middle; " data-field="id">
-                            <div class="th-inner sortable both">Responsável</div>
+                        <th onclick="sortTable(3)" style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
+                            <div class="th-inner sortable both">RESPONSÁVEL</div>
                             <div class="fht-cell"></div>
                         </th>
-                        <th onclick="sortTable(4)" style="text-align: center; vertical-align: middle; " data-field="id">
-                            <div class="th-inner sortable both">Última Alteração</div>
+                        <th onclick="sortTable(4)" style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
+                            <div class="th-inner sortable both">ÚLTIMA ALTERAÇÃO</div>
                             <div class="fht-cell"></div>
                         </th>
-                        <th style="text-align: center; vertical-align: middle; " data-field="id">
-                            <div class="th-inner sortable both">Nova Situação</div>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
+                            <div class="th-inner sortable both">NOVA SITUAÇÃO</div>
                             <div class="fht-cell"></div>
                         </th>
-                        <th style="text-align: center; vertical-align: middle; " data-field="id">
-                            <div class="th-inner sortable both">Deletar Cliente</div>
+                        <th style="text-align: center; vertical-align: middle; " data-field="id" id="destaque">
+                            <div class="th-inner sortable both">DELETAR CLIENTE</div>
                             <div class="fht-cell"></div>
                         </th>     
                     </tr>
@@ -66,14 +66,14 @@ Home
                                 </select>
                                 <input autocomplete="off" name="cpf" value="{{ thing['cpf'] }}" type="hidden">
                                 <input autocomplete="off" name="del" value="nao" type="hidden">                                                                
-                                <button class="btn btn-secondary" type="submit">Alterar</button>
+                                <button class="btn btn-secondary" type="submit" id="butcdv">Alterar</button>
                             </form>
                         </td>
                         <td>
                             <form action="/" method="post">
                                 <input autocomplete="off" name="cpf" value="{{ thing['cpf'] }}" type="hidden">
                                 <input autocomplete="off" name="del" value="sim" type="hidden">
-                                <button class="btn btn-secondary" type="submit">Deletar</button>
+                                <button class="btn btn-secondary" type="submit" id="butcdv">Deletar</button>
                             </form>
                         </td>
                     </tr>

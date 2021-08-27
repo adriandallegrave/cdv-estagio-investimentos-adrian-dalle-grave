@@ -1,30 +1,135 @@
+html {
+    /* color pallete */
+    --blue: #328AF6;
+    --purple: #5000C8;
+
+    width: 100vw;
+  }
+
 main
 {
     overflow-x: auto;
     text-align: center;
     color:black;
-    background-color:white;
+    background-color: white;    
 }
+
+
+body {
+    background-color: white;
+}
+
 
 th {
     cursor: pointer;
+    border: 1px solid black;
+    padding: 15px;
+    margin: 20px;    
+    line-height: 20px;    
+    text-align: center;        
   }
 
-body
-{
-    background-color:white;
+td {
+    border: 1px solid black;
+    padding: 15px;
+    margin: 20px;    
+    line-height: 20px;    
+    text-align: center;    
 }
 
-table, th, td {
+
+table {
   border: 1px solid black;
+  width: 100vw;
   padding: 15px;
+  margin: 20px;
+  line-height: 20px;
+  text-align: center;
 }
 
 main .form-control
 {
-    /* Center form controls */
     display: inline-block;
-
-    /* Override Bootstrap's 100% width for form controls */
     width: auto;
 }
+
+#butcdv {
+    background-color: #3B00B8;
+}
+
+#destaque {
+    color: #328AF6;
+    font-family: poppins,Poppins;    
+    font-size: 19px;
+    font-weight: 700;    
+}
+
+#mainTableDiv {
+    width: auto;  
+    height: auto;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    bottom: 10px; top: 10px; left: 10px; right: 10px;
+}
+
+#mainTableSearch {
+    margin-bottom: 20px;
+}
+
+#mainTableContainer {
+    width: auto;
+}
+
+#mainTableContent {
+    width: auto;  
+    line-height: 20px;
+    text-align: center;
+}
+
+@media screen and (max-width: 991px) {
+    #logo {
+        display: none;
+    }
+
+    #navitem {
+        font-family: poppins,Poppins;
+        font-size: 18px;
+        font-weight: 500;
+        font-style: normal;
+        color: white;
+        display: table-row;
+        position: relative;
+        width: 100vw;
+        text-align: center;
+    }
+  }
+
+#navitem {
+    font-family: poppins,Poppins;
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    color: white;
+    padding: 0px, 0px, 0px, 20px;
+    animation-name: navbar;  
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;    
+}
+
+#navitem:hover {
+    font-weight: 700;
+    color: var(--blue);
+}
+
+
+  @keyframes navbar {
+    0% {
+        background-color: black;
+        }
+
+    100% {
+        background-color: #5000C8;
+    }
+  }

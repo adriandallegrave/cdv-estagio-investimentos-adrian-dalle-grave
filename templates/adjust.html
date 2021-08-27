@@ -7,13 +7,13 @@ Alterar nome ou CPF
 
 {% block main %}
 
-<h5>Deixe em branco caso não queira alterar algum dos dados</h5>
+<h5 id="destaque">DEIXE EM BRANCO CASO NÃO QUEIRA ALTERAR ALGUM DOS DADOS</h5>
 <br>
 <form action="/adjust" method="post">
     <input autocomplete="off" name="cpf" placeholder="CPF" type="text">
     <input autocomplete="off" name="name" placeholder="Novo nome" type="text">
     <input autocomplete="off" name="novocpf" placeholder="Novo CPF" type="text">
-    <button class="btn btn-secondary" type="submit">Alterar</button>
+    <button class="btn btn-secondary" type="submit" id="butcdv">Alterar</button>
 </form>
 
 {% endblock %}
