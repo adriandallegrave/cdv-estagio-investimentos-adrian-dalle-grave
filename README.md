@@ -69,7 +69,6 @@
 
 ## O que falta
 
-* pycodestyle (pep8)
 * Documentação
 * Docker
 * Documentação - ajuste para Docker
