@@ -7,16 +7,15 @@ Home
 
 {% block main %}
 
-<div class="bootstrap-table bootstrap4" style="width: 90%;">
+<div class="bootstrap-table bootstrap4" data-search="true" data-show-refresh="true" style="width: 100%;">
     <div class="columns columns-right btn-group float-right">
         <div class="float-right search btn-group">
-            <input class="form-control search-input" type="search" placeholder="Search" autocomplete="off">
+            <input class="form-control search-input" type="search" id="myInput" placeholder="Pesquise por nomes" onkeyup="myFunction()" autocomplete="off">
         </div>  
     </div> <!-- search -->
     <div class="fixed-table-container fixed-height has-footer" style="padding-bottom: 149px;">
         <div class="fixed-table-header" style="margin-right: 0px;">
-            <table id="table" data-search="true" 
-            class="table table-bordered table-hover" style="margin-top: -98px;">
+            <table id="table" data-search="true" class="table table-bordered table-hover" style="margin-top: -98px;">
                 <thead class="">
                     <tr>
                         <th style="text-align: center; vertical-align: middle; " data-field="id">
@@ -84,5 +83,26 @@ Home
         </div> <!-- table headers -->
     </div> <!-- whole table -->
 </div> <!-- end of content -->
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+</script>
 
 {% endblock %}
