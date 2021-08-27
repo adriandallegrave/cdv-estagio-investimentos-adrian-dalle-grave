@@ -46,6 +46,15 @@
         1 → Aguardando transferência de recursos
         2 → Gestão de patrimônio ativa
 
+### method DELETE
+
+* `r = requests.delete('http://127.0.0.1:5000/api', json={'cpf':'apenas_digitos'})`
+
+    Isso deleterá um cliente da base de dados.
+
+- apenas_digitos → Número do CPF sem espaços, traços ou pontos    
+
+
 ## Planejamento
 
 * Fazer o app utilizando o framework Flask
@@ -54,7 +63,6 @@
 
 ## O que falta
 
-* Editar nome e cpf de cliente já cadastrado
 * Caso relevante, explicar melhorias que poderiam ser feitas
 * Filtrar tabela
 * Testes
@@ -63,7 +71,7 @@
 * pycodestyle (pep8)
 * Todo css e animações
 * Adaptar para mobile
-* Limpar planilha e entregar
+* Limpar tabela e entregar
 
 updating...
 
