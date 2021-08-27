@@ -2,13 +2,17 @@ main
 {
     overflow-x: auto;
     text-align: center;
-    color:white;
-    background-color:#013220;
+    color:black;
+    background-color:white;
 }
+
+th {
+    cursor: pointer;
+  }
 
 body
 {
-    background-color:#013220;
+    background-color:white;
 }
 
 table, th, td {
