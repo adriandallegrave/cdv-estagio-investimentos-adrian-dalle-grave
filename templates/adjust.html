@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Alterar nome ou CPF
+{% endblock %}
+
+
+{% block main %}
+
+<h5>Deixe em branco caso não queira alterar algum dos dados</h5>
+<br>
+<form action="/adjust" method="post">
+    <input autocomplete="off" name="cpf" placeholder="CPF" type="text">
+    <input autocomplete="off" name="name" placeholder="Novo nome" type="text">
+    <input autocomplete="off" name="novocpf" placeholder="Novo CPF" type="text">
+    <button class="btn btn-secondary" type="submit">Alterar</button>
+</form>
+
+{% endblock %}

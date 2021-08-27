@@ -231,7 +231,44 @@ def index():
     return render_template("onboarding.html", things=things, status=status)
 
 
-@app.route("/api", methods=["GET", "POST", "PUT"])
+@app.route("/adjust", methods=["GET", "POST"])
+@login_required
+def adjust():
+
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]['username']
+
+    if request.method == "POST":
+        cpf = request.form.get("cpf")
+        current_name = db.execute("SELECT name FROM onboarding WHERE (cpf = ?)", cpf)
+        novo_cpf = request.form.get("novocpf")
+        novo_nome = request.form.get("name")
+
+        if request.form.get("novocpf") == "":
+            novo_cpf = cpf
+
+        if request.form.get("name") == "":
+            novo_nome = current_name
+
+        if not request.form.get("cpf"):
+            return apology("Preencha o CPF atual do cliente")
+
+        if not re.search("^[0-9]*", cpf):
+            return apology("Preencha o CPF apenas com números")
+        elif len(cpf) != 11:
+            return apology("Digite apenas os 11 dígitos do CPF")
+
+        db.execute("UPDATE onboarding SET name = ? WHERE (cpf = ?)", novo_nome, cpf)
+        db.execute("UPDATE onboarding SET cpf = ? WHERE (cpf = ?)", novo_cpf, cpf)
+        return redirect("/")
+    else:
+        return render_template("adjust.html")
+
+
+    things = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    return render_template("onboarding.html", things=things, status=status)
+
+
+@app.route("/api", methods=["GET", "POST", "PUT", "DELETE"])
 def api():
 
     x = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
@@ -276,5 +313,13 @@ def api():
         cpf = data["cpf"]
 
         db.execute("UPDATE onboarding SET status = ? WHERE (cpf = ?)", status, cpf)
+
+        return "sucesso"
+
+    elif request.method == "DELETE":
+        data = request.json
+        cpf = data["cpf"]
+
+        db.execute("DELETE FROM onboarding WHERE (cpf = ?)", cpf)
 
         return "sucesso"
