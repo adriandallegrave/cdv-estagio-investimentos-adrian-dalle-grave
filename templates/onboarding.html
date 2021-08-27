@@ -48,7 +48,7 @@ Home
                         </th>                                                    
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tablebody">
                     {% for thing in things %}
                     <tr>
                         <td>  {{ thing["name"] }}  </td>
@@ -89,7 +89,7 @@ Home
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
-        table = document.getElementById("table");
+        table = document.getElementById("tablebody");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[0];
