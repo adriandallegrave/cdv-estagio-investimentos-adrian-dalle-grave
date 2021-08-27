@@ -271,8 +271,8 @@ def adjust():
 @app.route("/api", methods=["GET", "POST", "PUT", "DELETE"])
 def api():
 
-    x = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
-    x = json.dumps(x)
+    my_query = db.execute("SELECT name, cpf, status, username, date FROM onboarding")
+    x = json.dumps(my_query)
 
     if request.method == "GET":
         return x
