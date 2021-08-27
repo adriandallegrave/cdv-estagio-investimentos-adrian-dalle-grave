@@ -63,15 +63,15 @@
 
 ## O que falta
 
-* Caso relevante, explicar melhorias que poderiam ser feitas
-* Filtrar tabela
-* Testes
-* Docker
-* Documentação
-* pycodestyle (pep8)
 * Todo css e animações
 * Adaptar para mobile
+* Testes
+* Documentação
+* pycodestyle (pep8)
+* Docker
+* Caso relevante, explicar melhorias que poderiam ser feitas
 * Limpar tabela e entregar
+
 
 updating...
 
