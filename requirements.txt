@@ -1,0 +1,7 @@
+jsonify
+flask_restful
+requests
+cs50
+Flask
+Flask-Session
+redis
