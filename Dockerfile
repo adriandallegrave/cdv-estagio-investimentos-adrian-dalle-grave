@@ -6,7 +6,6 @@ FROM python:3.7-alpine
 RUN pip install jsonify
 RUN pip install flask_restful
 RUN pip install requests
-RUN pip install cs50
 RUN pip install Flask
 RUN pip install Flask-Session
 RUN pip install redis
