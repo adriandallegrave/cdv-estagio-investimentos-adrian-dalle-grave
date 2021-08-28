@@ -2,12 +2,18 @@
 
 ## Execução do app
 
+* Pacotes necessários:
+- `sudo apt-get install python3-venv`
+- `pip install jsonify`
+- `pip install flask_restful`
+- `pip install requests`
+- `pip install cs50`
+* `pip install Flask`
+* `pip install Flask-Session`
+
 * Clone o projeto e vá para a pasta dele no linux
 * `python3 -m venv venv`
 * `. venv/bin/activate`
-* `pip install Flask`
-* `pip install Flask-Session`
-* `export FLASK_APP=app.py`
 * `flask run`
 * Acesse o site em http://127.0.0.1:5000/
 
@@ -69,15 +75,8 @@
 
 ## O que falta
 
-* Documentação
 * Docker
 * Documentação - ajuste para Docker
-* Caso relevante, explicar melhorias que poderiam ser feitas
-* Limpar banco de dados e entregar
-
-
-updating...
-
 
 
 
