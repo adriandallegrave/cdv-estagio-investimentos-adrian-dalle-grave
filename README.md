@@ -57,17 +57,10 @@
 * `python3 api_test.py`
 
 
-## Planejamento
-
-* Fazer o app utilizando o framework Flask
-* Utilizar todos os métodos propostos
-* Versionar corretamente
-
 ## O que falta
 
 * Docker
 * Documentação - ajuste para Docker
-
 
 
 # Desafio estágio dev CDV #
