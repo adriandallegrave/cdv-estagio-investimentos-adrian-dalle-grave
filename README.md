@@ -62,10 +62,6 @@
 * `python3 api_test.py`
 
 
-## O que falta
-
-* Docker
-* Documentação - ajuste para Docker
 
 
 # Desafio estágio dev CDV #
