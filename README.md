@@ -1,6 +1,11 @@
 # Solução apresentada por Adrian Dalle Grave #
 
-## Execução do app
+## Execução do app via docker
+
+* `docker run -p 5000:5000 adriandallegrave/cdv:1.0.0`
+* Acesse o site em http://127.0.0.1:5000/
+
+## Execução do app de forma local
 
 * Clone o projeto e vá para a pasta dele no linux
 * Pacotes necessários:      `pip install -r requirements.txt`
