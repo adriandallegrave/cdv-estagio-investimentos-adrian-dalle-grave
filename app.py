@@ -19,6 +19,9 @@ app = Flask(__name__)
 api = Api(app)
 db = SQL("sqlite:///clients.db")
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
+    
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
